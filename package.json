@@ -11,6 +11,7 @@
   "license": "MIT",
   "devDependencies": {},
   "dependencies": {
-    "fastify": "^3.2.0"
+    "fastify": "^3.2.0",
+    "fastify-static": "^3.2.0"
   }
 }

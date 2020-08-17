@@ -1,14 +1,14 @@
-// Require the framework and instantiate it
+const path = require('path');
+
 const fastify = require('fastify')({ logger: true });
 
 const port = 3000;
 
-// Declare a route
-fastify.get('/', async (request, reply) => {
-  return 'Hello Fastify';
+fastify.register(require('fastify-static'), {
+  root: path.join(__dirname, 'static'),
 });
 
-// Run the server!
+// Run the server
 const start = async () => {
   try {
     await fastify.listen(port);
