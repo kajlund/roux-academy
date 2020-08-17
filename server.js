@@ -4,8 +4,18 @@ const fastify = require('fastify')({ logger: true });
 
 const port = 3000;
 
+fastify.register(require('point-of-view'), {
+  engine: {
+    ejs: require('ejs'),
+  },
+});
+
 fastify.register(require('fastify-static'), {
   root: path.join(__dirname, 'static'),
+});
+
+fastify.get('/', (req, reply) => {
+  reply.view('/templates/index.ejs', { pageTitle: 'Welcome' });
 });
 
 // Run the server
