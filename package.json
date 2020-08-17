@@ -1,0 +1,16 @@
+{
+  "name": "roux-academy",
+  "version": "1.0.0",
+  "description": "Exercise files for LinkedIn Learning course Building a Website with Node.js and Express",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "LuKa <kaj.lund@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {
+    "fastify": "^3.2.0"
+  }
+}
