@@ -14,9 +14,7 @@ fastify.register(require('fastify-static'), {
   root: path.join(__dirname, 'static'),
 });
 
-fastify.get('/', (req, reply) => {
-  reply.view('/templates/index.ejs', { pageTitle: 'Welcome' });
-});
+fastify.register(require('./routes'));
 
 // Run the server
 const start = async () => {
