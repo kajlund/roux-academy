@@ -1,21 +1,11 @@
-module.exports = async (fastify) => {
+const fp = require('fastify-plugin');
+
+module.exports = fp((fastify, options, done) => {
   fastify.get('/', (req, reply) => {
     reply.view('/templates/index.ejs', { pageTitle: 'Welcome' });
   });
 
-  fastify.get('/speakers', () => {
-    return 'Speaker list';
-  });
-
-  fastify.get('/speakers/:shortname', (req) => {
-    return `Speaker ${req.params.shortname}`;
-  });
-
-  fastify.get('/feedback', () => {
-    return 'Feedback';
-  });
-
-  fastify.post('/feedback', () => {
-    return 'Feedback form posted';
-  });
-};
+  fastify.register(require('./speakers'), { prefix: '/speakers' });
+  fastify.register(require('./feedback'), { prefix: '/feedback' });
+  done();
+}, '3.x');
