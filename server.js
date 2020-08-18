@@ -1,8 +1,31 @@
 const path = require('path');
 
-const fastify = require('fastify')({ logger: true });
+const logConfig = {
+  level: 'error',
+  prettyPrint: true,
+  serializers: {
+    res(reply) {
+      return {
+        statusCode: reply.statusCode,
+      };
+    },
+  },
+};
+
+const fastify = require('fastify')({
+  logger: logConfig,
+});
 
 const port = 3000;
+
+fastify.register(require('fastify-cookie'));
+
+fastify.register(require('fastify-session'), {
+  cookieName: 'session',
+  secret: 'a secret with minimum length of 32 characters',
+  cookie: { secure: false },
+  expires: 1800000,
+});
 
 fastify.register(require('point-of-view'), {
   engine: {
