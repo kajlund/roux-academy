@@ -7,7 +7,10 @@ module.exports = fp((fastify, options, done) => {
     }
     req.session.visitcount += 1;
     // req.log.error(`***** Number of visits: ${req.session.visitcount}`);
-    reply.view('/templates/index.ejs', { pageTitle: 'Welcome' });
+    reply.view('/templates/layout/index.ejs', {
+      pageTitle: 'Welcome',
+      template: 'index',
+    });
   });
 
   fastify.register(require('./speakers'), { prefix: '/speakers' });
