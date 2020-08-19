@@ -1,10 +1,6 @@
-const FeedbackService = require('../services/FeedbackService');
-
-const feedbackService = new FeedbackService('./data/feedback.json');
-
 module.exports = async (fastify) => {
-  fastify.get('/', async () => {
-    const feedback = await feedbackService.getList();
+  fastify.get('/', async function () {
+    const feedback = await this.data.feedback.getList();
     return feedback;
   });
 

@@ -1,8 +1,5 @@
 const path = require('path');
 
-const SpeakersService = require('./services/SpeakerService');
-const speakersService = new SpeakersService('./data/speakers.json');
-
 const logConfig = {
   level: 'error',
   prettyPrint: true,
@@ -43,10 +40,12 @@ fastify.register(require('fastify-static'), {
   root: path.join(__dirname, 'static'),
 });
 
+fastify.register(require('./services/data-service'));
+
 fastify.decorateReply('locals', { speakerNames: [] });
 
 fastify.addHook('preHandler', async function (req, reply) {
-  reply.locals.speakerNames = await speakersService.getNames();
+  reply.locals.speakerNames = await fastify.data.speakers.getNames();
   return;
 });
 

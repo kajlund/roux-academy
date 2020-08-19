@@ -1,10 +1,6 @@
-const SpeakersService = require('../services/SpeakerService');
-
-const speakersService = new SpeakersService('./data/speakers.json');
-
 module.exports = async (fastify) => {
-  fastify.get('/', async () => {
-    const speakers = await speakersService.getList();
+  fastify.get('/', async function () {
+    const speakers = await this.data.speakers.getList();
     return speakers;
   });
 
