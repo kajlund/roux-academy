@@ -1,5 +1,8 @@
 const path = require('path');
 
+const SpeakersService = require('./services/SpeakerService');
+const speakersService = new SpeakersService('./data/speakers.json');
+
 const logConfig = {
   level: 'error',
   prettyPrint: true,
@@ -31,10 +34,20 @@ fastify.register(require('point-of-view'), {
   engine: {
     ejs: require('ejs'),
   },
+  defaultContext: {
+    siteName: 'ROUX Meetups',
+  },
 });
 
 fastify.register(require('fastify-static'), {
   root: path.join(__dirname, 'static'),
+});
+
+fastify.decorateReply('locals', { speakerNames: [] });
+
+fastify.addHook('preHandler', async function (req, reply) {
+  reply.locals.speakerNames = await speakersService.getNames();
+  return;
 });
 
 fastify.register(require('./routes'));
