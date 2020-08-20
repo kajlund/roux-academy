@@ -8,7 +8,12 @@ module.exports = async (fastify) => {
     });
   });
 
-  fastify.get('/:shortname', (req) => {
-    return `Speaker ${req.params.shortname}`;
+  fastify.get('/:shortname', async function (req, reply) {
+    const speaker = await this.data.speakers.getSpeaker(req.params.shortname);
+    return reply.view('/templates/layout/index.ejs', {
+      pageTitle: 'Speakers',
+      template: 'speakers-detail',
+      speaker,
+    });
   });
 };
