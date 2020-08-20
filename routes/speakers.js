@@ -1,7 +1,11 @@
 module.exports = async (fastify) => {
-  fastify.get('/', async function () {
+  fastify.get('/', async function (req, reply) {
     const speakers = await this.data.speakers.getList();
-    return speakers;
+    return reply.view('/templates/layout/index.ejs', {
+      pageTitle: 'Speakers',
+      template: 'speakers',
+      speakers,
+    });
   });
 
   fastify.get('/:shortname', (req) => {
