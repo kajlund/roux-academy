@@ -31,6 +31,7 @@ fastify.register(require('point-of-view'), {
   engine: {
     ejs: require('ejs'),
   },
+  root: path.join(__dirname, 'views'),
   defaultContext: {
     siteName: 'ROUX Meetups',
   },

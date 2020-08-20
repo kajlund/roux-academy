@@ -10,7 +10,7 @@ module.exports = fp((fastify, options, done) => {
     const topSpeakers = await this.data.speakers.getList();
     const artwork = await this.data.speakers.getAllArtwork();
 
-    return reply.view('/templates/layout/index.ejs', {
+    return reply.view('/layout/index.ejs', {
       pageTitle: 'Welcome',
       template: 'index',
       topSpeakers,
