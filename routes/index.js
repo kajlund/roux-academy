@@ -8,11 +8,13 @@ module.exports = fp((fastify, options, done) => {
     req.session.visitcount += 1;
     // req.log.error(`***** Number of visits: ${req.session.visitcount}`);
     const topSpeakers = await this.data.speakers.getList();
+    const artwork = await this.data.speakers.getAllArtwork();
 
     return reply.view('/templates/layout/index.ejs', {
       pageTitle: 'Welcome',
       template: 'index',
       topSpeakers,
+      artwork,
     });
   });
 
