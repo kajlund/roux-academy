@@ -42,6 +42,8 @@ fastify.register(require('fastify-static'), {
   root: path.join(__dirname, 'static'),
 });
 
+fastify.register(require('fastify-formbody'));
+
 fastify.register(require('./services/data-service'));
 
 fastify.decorateReply('locals', { speakerNames: [] });

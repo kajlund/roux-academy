@@ -8,7 +8,8 @@ module.exports = async (fastify) => {
     });
   });
 
-  fastify.post('/', () => {
+  fastify.post('/', (req) => {
+    req.log.error(req.body);
     return 'Feedback form posted';
   });
 };
