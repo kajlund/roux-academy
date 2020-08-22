@@ -116,6 +116,9 @@ header .navbar-brand {
   border-bottom: none;
 }
 
+.feedback-errors {
+  font-size: 0.8rem;
+}
 
 /**  pixgrid **/
 

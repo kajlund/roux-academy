@@ -3,6 +3,20 @@
     <div class="col-md-4">
       <div class="maincontent">
         <h1>Send us feedback</h1>
+
+        <% if(locals.errors) { %>
+        <div class="alert alert-danger">
+          <ul class="feedback-errors">
+            <% errors.forEach(error => { %>
+            <li>
+              <em> <%= error.dataPath.charAt(1).toUpperCase() + error.dataPath.slice(2) %></em> <%=
+              error.message %>
+            </li>
+            <% }); %>
+          </ul>
+        </div>
+        <% } %>
+
         <form class="feedback-form" method="POST" action="/feedback">
           <div class="form-group">
             <label for="feedback-form-name">Name</label>

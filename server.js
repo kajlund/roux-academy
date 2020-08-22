@@ -15,6 +15,11 @@ const logConfig = {
 
 const fastify = require('fastify')({
   logger: logConfig,
+  ajv: {
+    customOptions: {
+      allErrors: true,
+    },
+  },
 });
 
 const port = 3000;
@@ -60,7 +65,7 @@ fastify.setNotFoundHandler(function (req, reply) {
 });
 
 fastify.setErrorHandler(function (error, req, reply) {
-  const status = error.statusCode || 500;
+  const status = reply.statusCode || error.statusCode || 500;
   const message = status >= 500 ? 'Internal Server Error' : error.message;
   const httpError = createError(status, message, { expose: false });
 
