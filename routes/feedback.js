@@ -16,23 +16,28 @@ const schema = {
 module.exports = async (fastify) => {
   fastify.get('/', async function (req, reply) {
     const feedback = await this.data.feedback.getList();
-    const errors = req.session.feedback ? req.session.feedback : false;
-    req.session.feedback = null;
+    const errors = req.session.errors ? req.session.errors : false;
+    const message = req.session.message ? req.session.message : '';
+    req.session.errors = null;
+    req.session.message = '';
 
     return reply.view('/layout/index.ejs', {
       pageTitle: 'Feedback',
       template: 'feedback',
       feedback,
       errors,
+      message,
     });
   });
 
-  fastify.post('/', { schema, attachValidation: true }, (req, reply) => {
+  fastify.post('/', { schema, attachValidation: true }, async function (req, reply) {
     if (req.validationError) {
-      // `req.validationError.validation` contains the raw validation error
-      req.session.feedback = req.validationError.validation;
+      req.session.errors = req.validationError.validation;
       return reply.redirect('/feedback');
     }
-    return 'Feedback form posted';
+    const { name, email, title, message } = req.body;
+    await this.data.feedback.addEntry(name, email, title, message);
+    req.session.message = 'Thank you for your feedback!';
+    return reply.redirect('/feedback');
   });
 };

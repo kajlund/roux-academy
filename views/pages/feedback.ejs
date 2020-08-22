@@ -15,6 +15,10 @@
             <% }); %>
           </ul>
         </div>
+        <% } else if (locals.message) { %>
+        <div class="alert alert-success">
+          <%= message %>
+        </div>
         <% } %>
 
         <form class="feedback-form" method="POST" action="/feedback">
